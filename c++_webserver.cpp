@@ -2,8 +2,8 @@
 #include<WebServer.h>
 
 
-const char* ssid ="TOPNET_5218";
-const char* password ="bz7jr189bp";
+const char* ssid ="your ssid";
+const char* password ="your password";
 
 WebServer server(80);
 int ledPin = 2;
@@ -16,22 +16,21 @@ server.send(200, "text/html", "<h1>ESP32 LED Control</h1>"
                                    );
 }
 
-//void handleOn() {
-    //digitalWrite(ledPin, HIGH); // Turn on the LED
-  // server.send(200, "text/plain", "LED is ON");
-//}
+void handleOn() {
+    digitalWrite(ledPin, HIGH); // Turn on the LED
+    server.send(200, "text/plain", "LED is ON");
+}
 
-//void handleOff() {
-  //  digitalWrite(ledPin, LOW); // Turn off the LED
-   //server.send(200, "text/plain", "LED is OFF");
-//}
+void handleOff() {
+   digitalWrite(ledPin, LOW); // Turn off the LED
+   server.send(200, "text/plain", "LED is OFF");
+}
 
 
 
 void setup(){
 Serial.begin(115200);
-//pinMode(ledPin, OUTPUT);
-//digitalWrite(ledPin, LOW);
+
 
 WiFi.begin(ssid, password);
 
@@ -42,9 +41,9 @@ Serial.println("Connecting to WiFi...");
 Serial.println("Connected to Wifi \n");
 Serial.println(WiFi.localIP());
 
-//server.on("/",handleRoot);
-//server.on("/on", handleOn);
-//server.on("/off", handleOff);
+server.on("/",handleRoot);
+server.on("/on", handleOn);
+server.on("/off", handleOff);
 
 server.begin();
 
